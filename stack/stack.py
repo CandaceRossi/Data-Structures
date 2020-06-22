@@ -18,11 +18,41 @@ class Stack:
         self.storage = []
 
     def __len__(self):
-        self.storage.len()
+        return self.size
 
     def push(self, value):
-        self.storage.append(value)
+        self.size += 1
+        #add an element to front of our array
+        self.storage.insert(0, value)
+        print(value)
 
     def pop(self):
-        self.storage.pop()
+        if len(self.storage) == 0: #check if empty
+            return None
+        #remove the first element in storage
+        self.size -= 1
+        node = self.storage.pop(0)
+        return node
 
+  
+
+# class Stack:
+#     def __init__(self):
+#         self.storage = LinkedList()
+
+#     def __len__(self):
+#         return self.storage.len()
+
+#     def push(self, data):
+#         newNode = Node(data)
+#         newNode.next = self.root
+#         self.root = newNode
+#         print "% d pushed to stack" % (data)
+
+#     def pop(self):
+#         if (self.isEmpty()):
+#             return float("-inf")
+#         temp = self.root
+#         self.root = self.root.next
+#         popped = temp.data
+#         return popped
