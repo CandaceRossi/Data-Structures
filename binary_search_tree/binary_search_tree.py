@@ -21,26 +21,35 @@ class BSTNode:
     def insert(self, value):
         # take the current value of our node (self.value)
         # compare to the new value we want to insert
-
-        # if new value < self.value
-            # If self.left is already taken by a node
+    
+        if value < self.value:
+                # If self.left is already taken by a node
                 # make that (left) node, call insert
-            # set the left to the new node with the new value
+                # set the left child to the new node with new value
+            if self.left is None:
+                self.left = BSTnode(value)
+            else: 
+                self.left.insert(value)
 
-        # if new value >= self.value
-            # If self.right is already taken by a node
-                # make that (right) node call insert
-            # set the right child to the new node with new value
+        if value >= self.value: 
+               # If self.right is already taken by a node
+               # make that (right) node call insert
+               # set the right child to the new node with new value
+            if self.right is None:
+                self.right = BSTNode(value)
+            else:
+                self.right.insert(value)            
 
     # Return True if the tree contains the value
     # False if it does not
 
     def contains(self, target):
-       if self.value == target:
-           return True
+        if self.value == target:
+            return True
         # compare the target to current value
-        # if current value < target
-        if self.value < target:
+        # if current value is more than target
+        found = False
+        if self.value >= target:
             # check the left subtree (self.left.contains(target))
             # if you cannot go left, return False
             if self.left is None:
@@ -48,7 +57,7 @@ class BSTNode:
             found = self.left.contains(target)
 
         # if current value >= target
-        if self.value >= target:
+        if self.value < target:
             # check if right subtree contains target
             # if you cannot go right, return false
             if self.right is None:
@@ -60,12 +69,20 @@ class BSTNode:
 
     # Return the maximum value found in the tree
     def get_max(self):
-        pass
+        if self.right is None:
+            return self.value
+        return self.right.get_max()     
 
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
-        pass
-
+        #call function on the current value fn(self.value)
+       fn(self.value)
+       #if you can go left, call for_each on the left tree
+        if self.left:
+            self.left.for_each(fn) 
+       #if you can go right, call for_each on the left tree
+        if self.right:
+            self.right.for_each(fn)
     # Part 2 -----------------------
 
     # Print all the values in order from low to high
@@ -93,3 +110,13 @@ class BSTNode:
     # Print Post-order recursive DFT
     def post_order_dft(self, node):
         pass
+
+root_node = BSTNode(8)
+root_node.insert(3)
+root_node.insert(10)
+root_node.insert(9)
+root_node.insert(12)
+
+print_node = lambda x: print(f'current_node is: {x}')
+
+root_node.for_each(print_node)
